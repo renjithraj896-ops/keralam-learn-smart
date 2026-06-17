@@ -16,7 +16,7 @@ const sq = (
   signId: string,
   qEn: string,
   qMl: string,
-  opts: [string, string][][],
+  opts: [string, string][],
   correct: number,
   expEn: string,
   expMl: string,
