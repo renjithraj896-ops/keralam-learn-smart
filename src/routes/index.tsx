@@ -66,6 +66,21 @@ function Index() {
               ? "Bilingual practice — traffic signs, signals and road rules for Kerala RTO."
               : "ദ്വിഭാഷാ പരിശീലനം — കേരള RTO യ്ക്കായി ഗതാഗത ചിഹ്നങ്ങൾ, സിഗ്നലുകൾ, റോഡ് നിയമങ്ങൾ."}
           </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link to="/quiz" search={{ lang }}>
+              <Button variant="secondary" size="lg">
+                {lang === "en" ? "Practice Tests" : "പരിശീലന ടെസ്റ്റുകൾ"}
+              </Button>
+            </Link>
+            <Link to="/quiz/$setId" params={{ setId: "mock" }} search={{ lang }}>
+              <Button
+                size="lg"
+                className="bg-white text-primary hover:bg-white/90"
+              >
+                {lang === "en" ? "Start Mock Test" : "മോക്ക് ടെസ്റ്റ് ആരംഭിക്കുക"}
+              </Button>
+            </Link>
+          </div>
         </section>
 
         <h3 className={`mb-3 text-lg font-semibold ${ml}`}>
