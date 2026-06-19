@@ -1,7 +1,9 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { SiteLayout } from "@/components/site-layout";
+import { useSite } from "@/lib/site-context";
 import {
   TOTAL_SETS,
   QUESTIONS_PER_SET,
@@ -29,9 +31,7 @@ export const Route = createFileRoute("/quiz/")({
 });
 
 function QuizIndex() {
-  const { lang: initial } = Route.useSearch();
-  const router = useRouter();
-  const [lang, setLang] = useState<Lang>(initial);
+  const { lang } = useSite();
   const ml = lang === "ml" ? "lang-ml" : "";
   const [completed, setCompleted] = useState<number[]>([]);
   const [scores, setScores] = useState<Record<string, number>>({});
@@ -42,23 +42,8 @@ function QuizIndex() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-10 border-b border-border bg-card/80 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
-          <Button variant="ghost" size="sm" onClick={() => router.history.back()}>
-            ← {lang === "en" ? "Back" : "തിരികെ"}
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setLang(lang === "en" ? "ml" : "en")}
-          >
-            {lang === "en" ? "മലയാളം" : "English"}
-          </Button>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-4 py-6">
+    <SiteLayout>
+      <div className="mx-auto max-w-5xl px-4 py-6">
         <h1 className={`mb-1 text-2xl font-bold sm:text-3xl ${ml}`}>
           {lang === "en" ? "Practice Tests" : "പരിശീലന ടെസ്റ്റുകൾ"}
         </h1>
@@ -80,7 +65,7 @@ function QuizIndex() {
                   : "ക്രമരഹിതമായ 25 ചോദ്യങ്ങൾ, പരീക്ഷാ ശൈലിയിൽ."}
               </p>
             </div>
-            <Link to="/quiz/$setId" params={{ setId: "mock" }} search={{ lang }}>
+            <Link to="/quiz/$setId" params={{ setId: "mock" }}>
               <Button variant="secondary" className="shrink-0">
                 {lang === "en" ? "Start" : "ആരംഭിക്കുക"}
               </Button>
@@ -97,7 +82,6 @@ function QuizIndex() {
                 key={id}
                 to="/quiz/$setId"
                 params={{ setId: String(id) }}
-                search={{ lang }}
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
               >
                 <Card className="cursor-pointer p-4 transition hover:border-primary hover:shadow-md">
@@ -123,7 +107,7 @@ function QuizIndex() {
             );
           })}
         </div>
-      </main>
-    </div>
+      </div>
+    </SiteLayout>
   );
 }
