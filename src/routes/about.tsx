@@ -1,0 +1,66 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { SiteLayout } from "@/components/site-layout";
+import { Card } from "@/components/ui/card";
+import { useSite } from "@/lib/site-context";
+
+export const Route = createFileRoute("/about")({
+  head: () => ({
+    meta: [
+      { title: "About Us — Kerala Road Master" },
+      {
+        name: "description",
+        content:
+          "Kerala Road Master is a free bilingual learning platform for the Kerala RTO Learner Licence (LL) test.",
+      },
+      { property: "og:title", content: "About Kerala Road Master" },
+      {
+        property: "og:description",
+        content: "Our mission, our team and how we help Kerala learners pass the RTO test.",
+      },
+    ],
+  }),
+  component: AboutPage,
+});
+
+function AboutPage() {
+  const { lang } = useSite();
+  const ml = lang === "ml" ? "lang-ml" : "";
+  return (
+    <SiteLayout>
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <h1 className={`text-3xl font-bold ${ml}`}>
+          {lang === "en" ? "About Kerala Road Master" : "കേരള റോഡ് മാസ്റ്റർ കുറിച്ച്"}
+        </h1>
+        <p className={`mt-3 text-muted-foreground ${ml}`}>
+          {lang === "en"
+            ? "Kerala Road Master is a free bilingual (English & Malayalam) learning and testing platform built for aspirants of the Kerala RTO Learner Licence (LL) and Driving Licence (DL) tests."
+            : "കേരള RTO ലേണർ ലൈസൻസ്, ഡ്രൈവിങ് ലൈസൻസ് പരീക്ഷാ ഉദ്യോഗാർത്ഥികൾക്കായി രൂപകൽപ്പന ചെയ്ത സൗജന്യ ദ്വിഭാഷാ പഠന-പരീക്ഷാ പ്ലാറ്റ്ഫോമാണ് കേരള റോഡ് മാസ്റ്റർ."}
+        </p>
+
+        <Card className="mt-6 p-6">
+          <h2 className={`text-lg font-semibold ${ml}`}>
+            {lang === "en" ? "Our Mission" : "ഞങ്ങളുടെ ദൗത്യം"}
+          </h2>
+          <p className={`mt-2 text-sm ${ml}`}>
+            {lang === "en"
+              ? "To make Kerala roads safer by giving every new driver high-quality, easy-to-understand learning material in their own language — completely free."
+              : "ഓരോ പുതിയ ഡ്രൈവർക്കും അവരുടെ സ്വന്തം ഭാഷയിൽ ഉയർന്ന നിലവാരമുള്ള, എളുപ്പത്തിൽ മനസ്സിലാക്കാവുന്ന പഠന സാമഗ്രികൾ പൂർണ്ണമായും സൗജന്യമായി നൽകി കേരളത്തിലെ റോഡുകൾ കൂടുതൽ സുരക്ഷിതമാക്കുക."}
+          </p>
+        </Card>
+
+        <Card className="mt-4 p-6">
+          <h2 className={`text-lg font-semibold ${ml}`}>
+            {lang === "en" ? "What we offer" : "ഞങ്ങൾ വാഗ്ദാനം ചെയ്യുന്നത്"}
+          </h2>
+          <ul className={`mt-2 list-disc space-y-1 pl-5 text-sm ${ml}`}>
+            <li>{lang === "en" ? "1000+ Kerala RTO practice questions" : "1000+ കേരള RTO പരിശീലന ചോദ്യങ്ങൾ"}</li>
+            <li>{lang === "en" ? "100+ traffic signs with explanations" : "100+ ഗതാഗത ചിഹ്നങ്ങൾ വിശദീകരണത്തോടെ"}</li>
+            <li>{lang === "en" ? "10 mock tests of 25 questions each, 20s timer" : "10 മോക്ക് ടെസ്റ്റുകൾ, 25 ചോദ്യങ്ങൾ, 20s ടൈമർ"}</li>
+            <li>{lang === "en" ? "AI Study Assistant for instant answers" : "തൽക്ഷണ ഉത്തരങ്ങൾക്കായി AI പഠന സഹായി"}</li>
+            <li>{lang === "en" ? "Fee calculator & application tracking links" : "ഫീസ് കാൽക്കുലേറ്റർ, അപേക്ഷാ ട്രാക്കിങ്"}</li>
+          </ul>
+        </Card>
+      </div>
+    </SiteLayout>
+  );
+}
