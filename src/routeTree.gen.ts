@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as FeeCalculatorRouteImport } from './routes/fee-calculator'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -28,6 +29,11 @@ const TermsRoute = TermsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeeCalculatorRoute = FeeCalculatorRouteImport.update({
+  id: '/fee-calculator',
+  path: '/fee-calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
+  '/fee-calculator': typeof FeeCalculatorRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
+  '/fee-calculator': typeof FeeCalculatorRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
+  '/fee-calculator': typeof FeeCalculatorRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/disclaimer'
     | '/faq'
+    | '/fee-calculator'
     | '/privacy'
     | '/terms'
     | '/category/$slug'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/disclaimer'
     | '/faq'
+    | '/fee-calculator'
     | '/privacy'
     | '/terms'
     | '/category/$slug'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/disclaimer'
     | '/faq'
+    | '/fee-calculator'
     | '/privacy'
     | '/terms'
     | '/category/$slug'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FaqRoute: typeof FaqRoute
+  FeeCalculatorRoute: typeof FeeCalculatorRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   CategorySlugRoute: typeof CategorySlugRoute
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fee-calculator': {
+      id: '/fee-calculator'
+      path: '/fee-calculator'
+      fullPath: '/fee-calculator'
+      preLoaderRoute: typeof FeeCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
   FaqRoute: FaqRoute,
+  FeeCalculatorRoute: FeeCalculatorRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   CategorySlugRoute: CategorySlugRoute,
