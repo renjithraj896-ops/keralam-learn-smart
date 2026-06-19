@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as QuizSetIdRouteImport } from './routes/quiz.$setId'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
   '/quiz/': typeof QuizIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
   '/quiz': typeof QuizIndexRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
   '/quiz/': typeof QuizIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/category/$slug' | '/quiz/$setId' | '/quiz/'
+  fullPaths: '/' | '/about' | '/category/$slug' | '/quiz/$setId' | '/quiz/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/category/$slug' | '/quiz/$setId' | '/quiz'
-  id: '__root__' | '/' | '/category/$slug' | '/quiz/$setId' | '/quiz/'
+  to: '/' | '/about' | '/category/$slug' | '/quiz/$setId' | '/quiz'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/category/$slug'
+    | '/quiz/$setId'
+    | '/quiz/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CategorySlugRoute: typeof CategorySlugRoute
   QuizSetIdRoute: typeof QuizSetIdRoute
   QuizIndexRoute: typeof QuizIndexRoute
@@ -71,6 +87,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CategorySlugRoute: CategorySlugRoute,
   QuizSetIdRoute: QuizSetIdRoute,
   QuizIndexRoute: QuizIndexRoute,
