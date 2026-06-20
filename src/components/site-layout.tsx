@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Moon, Sun, Languages } from "lucide-react";
+import { Menu, Moon, Sun, Languages, LogIn, User as UserIcon, LogOut } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +9,17 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSite } from "@/lib/site-context";
+import { useAuth } from "@/lib/auth-context";
 
 type NavItem = { to: string; en: string; ml: string };
 type NavGroup = { en: string; ml: string; items: NavItem[] };
@@ -159,6 +169,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             >
               {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
+            <UserMenu />
           </div>
         </div>
       </header>
@@ -236,5 +247,61 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         </div>
       </footer>
     </div>
+  );
+}
+
+function UserMenu() {
+  const { user, profile, signOut, loading } = useAuth();
+  const { lang } = useSite();
+  const ml = lang === "ml" ? "lang-ml" : "";
+  const t = (en: string, m: string) => (lang === "en" ? en : m);
+
+  if (loading) {
+    return <div className="h-9 w-9" aria-hidden />;
+  }
+
+  if (!user) {
+    return (
+      <Button asChild size="sm" className="ml-1 h-9">
+        <Link to="/auth">
+          <LogIn className="mr-1.5 h-4 w-4" />
+          <span className={ml}>{t("Sign In", "സൈൻ ഇൻ")}</span>
+        </Link>
+      </Button>
+    );
+  }
+
+  const name = profile?.full_name || user.email || "U";
+  const initials = name.split(" ").map((s) => s[0]).join("").slice(0, 2).toUpperCase();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="ml-1 rounded-full" aria-label="Account">
+          <Avatar className="h-8 w-8">
+            {profile?.avatar_url ? <AvatarImage src={profile.avatar_url} alt="" /> : null}
+            <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="truncate">
+          <p className={`truncate text-sm font-medium ${ml}`}>{name}</p>
+          <p className="truncate text-xs font-normal text-muted-foreground">{user.email}</p>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/profile" className={ml}>
+            <UserIcon className="mr-2 h-4 w-4" />
+            {t("My Profile", "എന്റെ പ്രൊഫൈൽ")}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut()} className={ml}>
+          <LogOut className="mr-2 h-4 w-4" />
+          {t("Sign out", "സൈൻ ഔട്ട്")}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
