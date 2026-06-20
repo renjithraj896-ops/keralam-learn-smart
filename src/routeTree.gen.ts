@@ -16,6 +16,7 @@ import { Route as FeeCalculatorRouteImport } from './routes/fee-calculator'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApplicationTrackingRouteImport } from './routes/application-tracking'
 import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
 import { Route as AboutRouteImport } from './routes/about'
@@ -59,6 +60,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApplicationTrackingRoute = ApplicationTrackingRouteImport.update({
   id: '/application-tracking',
   path: '/application-tracking',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/ai-assistant'
     | '/application-tracking'
+    | '/auth'
     | '/contact'
     | '/disclaimer'
     | '/faq'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/ai-assistant'
     | '/application-tracking'
+    | '/auth'
     | '/contact'
     | '/disclaimer'
     | '/faq'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/ai-assistant'
     | '/application-tracking'
+    | '/auth'
     | '/contact'
     | '/disclaimer'
     | '/faq'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AiAssistantRoute: typeof AiAssistantRoute
   ApplicationTrackingRoute: typeof ApplicationTrackingRoute
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FaqRoute: typeof FaqRoute
@@ -263,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/application-tracking': {
       id: '/application-tracking'
       path: '/application-tracking'
@@ -320,6 +340,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AiAssistantRoute: AiAssistantRoute,
   ApplicationTrackingRoute: ApplicationTrackingRoute,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
   FaqRoute: FaqRoute,
