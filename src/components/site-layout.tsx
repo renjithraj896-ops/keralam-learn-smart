@@ -137,7 +137,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
           <Link to="/" className="flex min-w-0 items-center gap-2">
             <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-base font-bold text-primary-foreground shadow-sm">
-              K
+              T
             </div>
             <div className="min-w-0">
               <p className={`truncate text-sm font-bold leading-tight sm:text-base ${ml}`}>
@@ -182,7 +182,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <div>
               <div className="flex items-center gap-2">
                 <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-base font-bold text-primary-foreground">
-                  K
+              T
                 </div>
                 <p className={`font-bold ${ml}`}>
                   {lang === "en" ? "Traffic Tips" : "ട്രാഫിക് ടിപ്സ്"}
