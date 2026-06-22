@@ -7,7 +7,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useSite } from "@/lib/site-context";
+import { useAuth } from "@/lib/auth-context";
 import { askTutor } from "@/lib/ai.functions";
+import { Link } from "@tanstack/react-router";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -34,6 +36,7 @@ function AssistantPage() {
   const { lang } = useSite();
   const ml = lang === "ml" ? "lang-ml" : "";
   const ask = useServerFn(askTutor);
+  const { user, loading: authLoading } = useAuth();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -75,7 +78,25 @@ function AssistantPage() {
           </div>
         </div>
 
-        {messages.length === 0 && (
+        {!authLoading && !user && (
+          <Card className="mb-4 border-primary/40 bg-primary/5 p-4">
+            <p className={`mb-2 text-sm font-semibold ${ml}`}>
+              {lang === "en"
+                ? "Sign in to use the AI tutor"
+                : "AI ട്യൂട്ടർ ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യുക"}
+            </p>
+            <p className={`mb-3 text-xs text-muted-foreground ${ml}`}>
+              {lang === "en"
+                ? "We require a free account to prevent abuse of AI credits."
+                : "AI ക്രെഡിറ്റുകൾ ദുരുപയോഗം ചെയ്യാതിരിക്കാൻ സൗജന്യ അക്കൗണ്ട് ആവശ്യമാണ്."}
+            </p>
+            <Button asChild size="sm">
+              <Link to="/auth">{lang === "en" ? "Sign in" : "സൈൻ ഇൻ"}</Link>
+            </Button>
+          </Card>
+        )}
+
+        {user && messages.length === 0 && (
           <Card className="mb-4 p-4">
             <p className={`mb-3 text-sm font-medium ${ml}`}>
               {lang === "en" ? "Try asking:" : "ഇത് ചോദിച്ചു നോക്കൂ:"}
@@ -150,7 +171,7 @@ function AssistantPage() {
             rows={1}
             className="min-h-10 flex-1 resize-none border-0 focus-visible:ring-0"
           />
-          <Button type="submit" size="icon" disabled={loading || !input.trim()}>
+          <Button type="submit" size="icon" disabled={loading || !input.trim() || !user}>
             <Send className="h-4 w-4" />
           </Button>
         </form>
