@@ -106,7 +106,7 @@ const LEGAL_LINKS: NavItem[] = [
 ];
 
 export function SiteLayout({ children }: { children: ReactNode }) {
-  const { lang, toggleLang, dark, toggleDark } = useSite();
+  const { lang, dark, toggleDark } = useSite();
   const ml = lang === "ml" ? "lang-ml" : "";
   const [open, setOpen] = useState(false);
   const closeSheet = () => setOpen(false);
