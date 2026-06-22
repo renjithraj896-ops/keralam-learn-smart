@@ -9,17 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UserAgreementRouteImport } from './routes/user-agreement'
 import { Route as TrustRouteImport } from './routes/trust'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ReportIssueRouteImport } from './routes/report-issue'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MockTestsRouteImport } from './routes/mock-tests'
+import { Route as HelpSupportRouteImport } from './routes/help-support'
 import { Route as FeeCalculatorRouteImport } from './routes/fee-calculator'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as DataProtectionRouteImport } from './routes/data-protection'
+import { Route as CopyrightRouteImport } from './routes/copyright'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApplicationTrackingRouteImport } from './routes/application-tracking'
 import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
+import { Route as AcceptableUseRouteImport } from './routes/acceptable-use'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -28,6 +36,11 @@ import { Route as QuizSetIdRouteImport } from './routes/quiz.$setId'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 
+const UserAgreementRoute = UserAgreementRouteImport.update({
+  id: '/user-agreement',
+  path: '/user-agreement',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrustRoute = TrustRouteImport.update({
   id: '/trust',
   path: '/trust',
@@ -38,6 +51,16 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportIssueRoute = ReportIssueRouteImport.update({
+  id: '/report-issue',
+  path: '/report-issue',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -46,6 +69,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const MockTestsRoute = MockTestsRouteImport.update({
   id: '/mock-tests',
   path: '/mock-tests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpSupportRoute = HelpSupportRouteImport.update({
+  id: '/help-support',
+  path: '/help-support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeeCalculatorRoute = FeeCalculatorRouteImport.update({
@@ -61,6 +89,21 @@ const FaqRoute = FaqRouteImport.update({
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataProtectionRoute = DataProtectionRouteImport.update({
+  id: '/data-protection',
+  path: '/data-protection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CopyrightRoute = CopyrightRouteImport.update({
+  id: '/copyright',
+  path: '/copyright',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -81,6 +124,11 @@ const ApplicationTrackingRoute = ApplicationTrackingRouteImport.update({
 const AiAssistantRoute = AiAssistantRouteImport.update({
   id: '/ai-assistant',
   path: '/ai-assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcceptableUseRoute = AcceptableUseRouteImport.update({
+  id: '/acceptable-use',
+  path: '/acceptable-use',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -121,17 +169,25 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/acceptable-use': typeof AcceptableUseRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/copyright': typeof CopyrightRoute
+  '/data-protection': typeof DataProtectionRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
   '/fee-calculator': typeof FeeCalculatorRoute
+  '/help-support': typeof HelpSupportRoute
   '/mock-tests': typeof MockTestsRoute
   '/privacy': typeof PrivacyRoute
+  '/report-issue': typeof ReportIssueRoute
+  '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
+  '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
@@ -140,17 +196,25 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/acceptable-use': typeof AcceptableUseRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/copyright': typeof CopyrightRoute
+  '/data-protection': typeof DataProtectionRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
   '/fee-calculator': typeof FeeCalculatorRoute
+  '/help-support': typeof HelpSupportRoute
   '/mock-tests': typeof MockTestsRoute
   '/privacy': typeof PrivacyRoute
+  '/report-issue': typeof ReportIssueRoute
+  '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
+  '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
@@ -161,17 +225,25 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/acceptable-use': typeof AcceptableUseRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/copyright': typeof CopyrightRoute
+  '/data-protection': typeof DataProtectionRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
   '/fee-calculator': typeof FeeCalculatorRoute
+  '/help-support': typeof HelpSupportRoute
   '/mock-tests': typeof MockTestsRoute
   '/privacy': typeof PrivacyRoute
+  '/report-issue': typeof ReportIssueRoute
+  '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
+  '/user-agreement': typeof UserAgreementRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
@@ -182,17 +254,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/acceptable-use'
     | '/ai-assistant'
     | '/application-tracking'
     | '/auth'
     | '/contact'
+    | '/cookie-policy'
+    | '/copyright'
+    | '/data-protection'
     | '/disclaimer'
     | '/faq'
     | '/fee-calculator'
+    | '/help-support'
     | '/mock-tests'
     | '/privacy'
+    | '/report-issue'
+    | '/settings'
     | '/terms'
     | '/trust'
+    | '/user-agreement'
     | '/profile'
     | '/category/$slug'
     | '/quiz/$setId'
@@ -201,17 +281,25 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/acceptable-use'
     | '/ai-assistant'
     | '/application-tracking'
     | '/auth'
     | '/contact'
+    | '/cookie-policy'
+    | '/copyright'
+    | '/data-protection'
     | '/disclaimer'
     | '/faq'
     | '/fee-calculator'
+    | '/help-support'
     | '/mock-tests'
     | '/privacy'
+    | '/report-issue'
+    | '/settings'
     | '/terms'
     | '/trust'
+    | '/user-agreement'
     | '/profile'
     | '/category/$slug'
     | '/quiz/$setId'
@@ -221,17 +309,25 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about'
+    | '/acceptable-use'
     | '/ai-assistant'
     | '/application-tracking'
     | '/auth'
     | '/contact'
+    | '/cookie-policy'
+    | '/copyright'
+    | '/data-protection'
     | '/disclaimer'
     | '/faq'
     | '/fee-calculator'
+    | '/help-support'
     | '/mock-tests'
     | '/privacy'
+    | '/report-issue'
+    | '/settings'
     | '/terms'
     | '/trust'
+    | '/user-agreement'
     | '/_authenticated/profile'
     | '/category/$slug'
     | '/quiz/$setId'
@@ -242,17 +338,25 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AcceptableUseRoute: typeof AcceptableUseRoute
   AiAssistantRoute: typeof AiAssistantRoute
   ApplicationTrackingRoute: typeof ApplicationTrackingRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
+  CopyrightRoute: typeof CopyrightRoute
+  DataProtectionRoute: typeof DataProtectionRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FaqRoute: typeof FaqRoute
   FeeCalculatorRoute: typeof FeeCalculatorRoute
+  HelpSupportRoute: typeof HelpSupportRoute
   MockTestsRoute: typeof MockTestsRoute
   PrivacyRoute: typeof PrivacyRoute
+  ReportIssueRoute: typeof ReportIssueRoute
+  SettingsRoute: typeof SettingsRoute
   TermsRoute: typeof TermsRoute
   TrustRoute: typeof TrustRoute
+  UserAgreementRoute: typeof UserAgreementRoute
   CategorySlugRoute: typeof CategorySlugRoute
   QuizSetIdRoute: typeof QuizSetIdRoute
   QuizIndexRoute: typeof QuizIndexRoute
@@ -260,6 +364,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/user-agreement': {
+      id: '/user-agreement'
+      path: '/user-agreement'
+      fullPath: '/user-agreement'
+      preLoaderRoute: typeof UserAgreementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trust': {
       id: '/trust'
       path: '/trust'
@@ -274,6 +385,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report-issue': {
+      id: '/report-issue'
+      path: '/report-issue'
+      fullPath: '/report-issue'
+      preLoaderRoute: typeof ReportIssueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -286,6 +411,13 @@ declare module '@tanstack/react-router' {
       path: '/mock-tests'
       fullPath: '/mock-tests'
       preLoaderRoute: typeof MockTestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help-support': {
+      id: '/help-support'
+      path: '/help-support'
+      fullPath: '/help-support'
+      preLoaderRoute: typeof HelpSupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fee-calculator': {
@@ -307,6 +439,27 @@ declare module '@tanstack/react-router' {
       path: '/disclaimer'
       fullPath: '/disclaimer'
       preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-protection': {
+      id: '/data-protection'
+      path: '/data-protection'
+      fullPath: '/data-protection'
+      preLoaderRoute: typeof DataProtectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/copyright': {
+      id: '/copyright'
+      path: '/copyright'
+      fullPath: '/copyright'
+      preLoaderRoute: typeof CopyrightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -335,6 +488,13 @@ declare module '@tanstack/react-router' {
       path: '/ai-assistant'
       fullPath: '/ai-assistant'
       preLoaderRoute: typeof AiAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acceptable-use': {
+      id: '/acceptable-use'
+      path: '/acceptable-use'
+      fullPath: '/acceptable-use'
+      preLoaderRoute: typeof AcceptableUseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -404,17 +564,25 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AcceptableUseRoute: AcceptableUseRoute,
   AiAssistantRoute: AiAssistantRoute,
   ApplicationTrackingRoute: ApplicationTrackingRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
+  CopyrightRoute: CopyrightRoute,
+  DataProtectionRoute: DataProtectionRoute,
   DisclaimerRoute: DisclaimerRoute,
   FaqRoute: FaqRoute,
   FeeCalculatorRoute: FeeCalculatorRoute,
+  HelpSupportRoute: HelpSupportRoute,
   MockTestsRoute: MockTestsRoute,
   PrivacyRoute: PrivacyRoute,
+  ReportIssueRoute: ReportIssueRoute,
+  SettingsRoute: SettingsRoute,
   TermsRoute: TermsRoute,
   TrustRoute: TrustRoute,
+  UserAgreementRoute: UserAgreementRoute,
   CategorySlugRoute: CategorySlugRoute,
   QuizSetIdRoute: QuizSetIdRoute,
   QuizIndexRoute: QuizIndexRoute,
