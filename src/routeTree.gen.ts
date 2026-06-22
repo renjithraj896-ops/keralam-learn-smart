@@ -16,6 +16,7 @@ import { Route as MockTestsRouteImport } from './routes/mock-tests'
 import { Route as FeeCalculatorRouteImport } from './routes/fee-calculator'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApplicationTrackingRouteImport } from './routes/application-tracking'
@@ -61,6 +62,11 @@ const FaqRoute = FaqRouteImport.update({
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/application-tracking': typeof ApplicationTrackingRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
   '/fee-calculator': typeof FeeCalculatorRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/application-tracking': typeof ApplicationTrackingRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
   '/fee-calculator': typeof FeeCalculatorRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/application-tracking': typeof ApplicationTrackingRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/faq': typeof FaqRoute
   '/fee-calculator': typeof FeeCalculatorRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/application-tracking'
     | '/auth'
     | '/contact'
+    | '/cookie-policy'
     | '/disclaimer'
     | '/faq'
     | '/fee-calculator'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/application-tracking'
     | '/auth'
     | '/contact'
+    | '/cookie-policy'
     | '/disclaimer'
     | '/faq'
     | '/fee-calculator'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/application-tracking'
     | '/auth'
     | '/contact'
+    | '/cookie-policy'
     | '/disclaimer'
     | '/faq'
     | '/fee-calculator'
@@ -246,6 +258,7 @@ export interface RootRouteChildren {
   ApplicationTrackingRoute: typeof ApplicationTrackingRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FaqRoute: typeof FaqRoute
   FeeCalculatorRoute: typeof FeeCalculatorRoute
@@ -307,6 +320,13 @@ declare module '@tanstack/react-router' {
       path: '/disclaimer'
       fullPath: '/disclaimer'
       preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -408,6 +428,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApplicationTrackingRoute: ApplicationTrackingRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
   DisclaimerRoute: DisclaimerRoute,
   FaqRoute: FaqRoute,
   FeeCalculatorRoute: FeeCalculatorRoute,
