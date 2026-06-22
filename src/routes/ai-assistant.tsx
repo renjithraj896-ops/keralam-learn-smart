@@ -171,7 +171,7 @@ function AssistantPage() {
             rows={1}
             className="min-h-10 flex-1 resize-none border-0 focus-visible:ring-0"
           />
-          <Button type="submit" size="icon" disabled={loading || !input.trim()}>
+          <Button type="submit" size="icon" disabled={loading || !input.trim() || !user}>
             <Send className="h-4 w-4" />
           </Button>
         </form>
