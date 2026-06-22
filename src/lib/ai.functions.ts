@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { generateText } from "ai";
 import { z } from "zod";
 import { createLovableAiGatewayProvider } from "./ai-gateway.server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const SYSTEM = `You are the Traffic Tips AI Tutor. You help learners pass the Kerala RTO Learner Licence (LL) test.
 - Always answer in the user's chosen language (English or Malayalam). If asked in Malayalam, reply in Malayalam.
@@ -16,7 +17,7 @@ const ChatInput = z.object({
     .array(
       z.object({
         role: z.enum(["user", "assistant"]),
-        content: z.string(),
+        content: z.string().max(2000),
       }),
     )
     .max(20)
@@ -25,6 +26,7 @@ const ChatInput = z.object({
 });
 
 export const askTutor = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => ChatInput.parse(input))
   .handler(async ({ data }) => {
     const key = process.env.LOVABLE_API_KEY;
@@ -70,10 +72,11 @@ const AnalyzeInput = z.object({
   correct: z.number().int().min(0),
   wrong: z.number().int().min(0),
   unanswered: z.number().int().min(0),
-  weakTopics: z.array(z.string()).max(10).default([]),
+  weakTopics: z.array(z.string().max(100)).max(10).default([]),
 });
 
 export const analyzePerformance = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => AnalyzeInput.parse(input))
   .handler(async ({ data }) => {
     const key = process.env.LOVABLE_API_KEY;
