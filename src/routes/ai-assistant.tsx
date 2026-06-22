@@ -78,7 +78,25 @@ function AssistantPage() {
           </div>
         </div>
 
-        {messages.length === 0 && (
+        {!authLoading && !user && (
+          <Card className="mb-4 border-primary/40 bg-primary/5 p-4">
+            <p className={`mb-2 text-sm font-semibold ${ml}`}>
+              {lang === "en"
+                ? "Sign in to use the AI tutor"
+                : "AI ട്യൂട്ടർ ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യുക"}
+            </p>
+            <p className={`mb-3 text-xs text-muted-foreground ${ml}`}>
+              {lang === "en"
+                ? "We require a free account to prevent abuse of AI credits."
+                : "AI ക്രെഡിറ്റുകൾ ദുരുപയോഗം ചെയ്യാതിരിക്കാൻ സൗജന്യ അക്കൗണ്ട് ആവശ്യമാണ്."}
+            </p>
+            <Button asChild size="sm">
+              <Link to="/auth">{lang === "en" ? "Sign in" : "സൈൻ ഇൻ"}</Link>
+            </Button>
+          </Card>
+        )}
+
+        {user && messages.length === 0 && (
           <Card className="mb-4 p-4">
             <p className={`mb-3 text-sm font-medium ${ml}`}>
               {lang === "en" ? "Try asking:" : "ഇത് ചോദിച്ചു നോക്കൂ:"}
