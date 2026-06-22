@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserAgreementRouteImport } from './routes/user-agreement'
 import { Route as TrustRouteImport } from './routes/trust'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ReportIssueRouteImport } from './routes/report-issue'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MockTestsRouteImport } from './routes/mock-tests'
@@ -48,6 +49,11 @@ const TrustRoute = TrustRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportIssueRoute = ReportIssueRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/mock-tests': typeof MockTestsRoute
   '/privacy': typeof PrivacyRoute
   '/report-issue': typeof ReportIssueRoute
+  '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
   '/user-agreement': typeof UserAgreementRoute
@@ -204,6 +211,7 @@ export interface FileRoutesByTo {
   '/mock-tests': typeof MockTestsRoute
   '/privacy': typeof PrivacyRoute
   '/report-issue': typeof ReportIssueRoute
+  '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
   '/user-agreement': typeof UserAgreementRoute
@@ -232,6 +240,7 @@ export interface FileRoutesById {
   '/mock-tests': typeof MockTestsRoute
   '/privacy': typeof PrivacyRoute
   '/report-issue': typeof ReportIssueRoute
+  '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
   '/user-agreement': typeof UserAgreementRoute
@@ -260,6 +269,7 @@ export interface FileRouteTypes {
     | '/mock-tests'
     | '/privacy'
     | '/report-issue'
+    | '/settings'
     | '/terms'
     | '/trust'
     | '/user-agreement'
@@ -286,6 +296,7 @@ export interface FileRouteTypes {
     | '/mock-tests'
     | '/privacy'
     | '/report-issue'
+    | '/settings'
     | '/terms'
     | '/trust'
     | '/user-agreement'
@@ -313,6 +324,7 @@ export interface FileRouteTypes {
     | '/mock-tests'
     | '/privacy'
     | '/report-issue'
+    | '/settings'
     | '/terms'
     | '/trust'
     | '/user-agreement'
@@ -341,6 +353,7 @@ export interface RootRouteChildren {
   MockTestsRoute: typeof MockTestsRoute
   PrivacyRoute: typeof PrivacyRoute
   ReportIssueRoute: typeof ReportIssueRoute
+  SettingsRoute: typeof SettingsRoute
   TermsRoute: typeof TermsRoute
   TrustRoute: typeof TrustRoute
   UserAgreementRoute: typeof UserAgreementRoute
@@ -370,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report-issue': {
@@ -559,6 +579,7 @@ const rootRouteChildren: RootRouteChildren = {
   MockTestsRoute: MockTestsRoute,
   PrivacyRoute: PrivacyRoute,
   ReportIssueRoute: ReportIssueRoute,
+  SettingsRoute: SettingsRoute,
   TermsRoute: TermsRoute,
   TrustRoute: TrustRoute,
   UserAgreementRoute: UserAgreementRoute,
