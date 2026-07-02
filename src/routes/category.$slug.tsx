@@ -2,6 +2,8 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { CATEGORIES, getCategory } from "@/data/categories";
 import { QUESTIONS } from "@/data/questions";
 import { getSign, SIGNS, type SignCategory } from "@/data/signs";
+import { SIGNALS, SIGNAL_GROUP } from "@/data/signals";
+import { POLICE_SIGNALS } from "@/data/police-signals";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SiteLayout } from "@/components/site-layout";
@@ -61,6 +63,8 @@ function CategoryPage() {
   const notes = STUDY_NOTES[cat.slug] ?? [];
   const relatedQs = QUESTIONS.filter((q) => q.category === cat.slug).slice(0, 6);
   const showSignLibrary = cat.slug === "traffic-signs";
+  const showSignalLibrary = cat.slug === "traffic-signals";
+  const showPoliceLibrary = cat.slug === "police-hand-signals";
 
   return (
     <SiteLayout>
@@ -83,6 +87,8 @@ function CategoryPage() {
         </Card>
 
         {showSignLibrary && <SignLibrary />}
+        {showSignalLibrary && <SignalLibrary />}
+        {showPoliceLibrary && <PoliceLibrary />}
 
         {notes.length > 0 && (
           <Card className="mb-4 p-5">
