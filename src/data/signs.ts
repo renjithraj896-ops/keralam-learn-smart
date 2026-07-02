@@ -419,13 +419,6 @@ export const SIGNS: Sign[] = [
     svg: infoRect(`<text x="100" y="145" font-size="120" font-weight="900" font-family="Inter, sans-serif" fill="#fff" text-anchor="middle">i</text>`),
   },
 ];
-// Keep an empty tail so appended items retain the array closing above.
-SIGNS.length; // no-op ensures no dead code stripping
-
-// Fallback splice — re-export nothing extra; array already exported.
-const _EXTRA_SIGN_MARKER = true;
-export { _EXTRA_SIGN_MARKER };
-];
 
 export const SIGN_CATEGORIES: { value: SignCategory | "all"; en: string; ml: string }[] = [
   { value: "all", en: "All", ml: "എല്ലാം" },
