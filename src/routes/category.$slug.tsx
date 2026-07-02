@@ -279,3 +279,107 @@ function SignLibrary() {
     </Card>
   );
 }
+
+function SignalLibrary() {
+  const { lang, t } = useSite();
+  const ml = lang === "ml" ? "lang-ml" : "";
+  return (
+    <Card className="mb-4 p-5">
+      <h2 className={`mb-1 text-lg font-semibold ${ml}`}>
+        {lang === "en" ? "Traffic Signal Library" : "ട്രാഫിക് സിഗ്നൽ ലൈബ്രറി"}
+      </h2>
+      <p className={`mb-4 text-xs text-muted-foreground ${ml}`}>
+        {lang === "en"
+          ? "Solid, arrow, pedestrian and flashing signals with meaning, usage and a learner-exam Q&A."
+          : "സ്ഥിര, അമ്പടയാള, കാൽനട, മിന്നുന്ന സിഗ്നലുകൾ — അർത്ഥം, ഉപയോഗം, പരീക്ഷാ ചോദ്യം സഹിതം."}
+      </p>
+      <div className="space-y-6">
+        {SIGNAL_GROUP.map((g) => {
+          const items = SIGNALS.filter((s) => s.kind === g.kind);
+          return (
+            <section key={g.kind}>
+              <h3 className={`mb-3 border-l-4 border-emerald-600 pl-3 text-base font-bold ${ml}`}>
+                {t({ en: g.en, ml: g.ml })}
+              </h3>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {items.map((s) => (
+                  <div key={s.id} className="rounded-xl border border-border bg-card p-3">
+                    <div className="flex gap-3">
+                      <div
+                        className="h-28 w-16 shrink-0"
+                        aria-label={s.name.en}
+                        dangerouslySetInnerHTML={{ __html: s.svg }}
+                      />
+                      <div className="min-w-0">
+                        <p className={`text-sm font-semibold ${ml}`}>{t(s.name)}</p>
+                        <p className={`mt-0.5 text-xs text-muted-foreground ${ml}`}>{t(s.meaning)}</p>
+                      </div>
+                    </div>
+                    <dl className="mt-3 space-y-1.5 text-xs leading-relaxed">
+                      <div className={ml}>
+                        <dt className="inline font-semibold text-primary">{t({ en: "Usage: ", ml: "ഉപയോഗം: " })}</dt>
+                        <dd className="inline">{t(s.usage)}</dd>
+                      </div>
+                      <div className={ml}>
+                        <dt className="inline font-semibold text-primary">Q: </dt>
+                        <dd className="inline">{t(s.learnerQ.q)}</dd>
+                      </div>
+                      <div className={`text-green-700 dark:text-green-400 ${ml}`}>
+                        <dt className="inline font-semibold">A: </dt>
+                        <dd className="inline">{t(s.learnerQ.a)}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </Card>
+  );
+}
+
+function PoliceLibrary() {
+  const { lang, t } = useSite();
+  const ml = lang === "ml" ? "lang-ml" : "";
+  return (
+    <Card className="mb-4 p-5">
+      <h2 className={`mb-1 text-lg font-semibold ${ml}`}>
+        {lang === "en" ? "Kerala Police Hand Signals" : "കേരള പോലീസ് കൈ സിഗ്നലുകൾ"}
+      </h2>
+      <p className={`mb-4 text-xs text-muted-foreground ${ml}`}>
+        {lang === "en"
+          ? "Officer signals override all lights and signs. Learn each posture, its meaning and exam note."
+          : "ഉദ്യോഗസ്ഥന്റെ സിഗ്നൽ എല്ലാ ലൈറ്റ്/അടയാളത്തിനെക്കാൾ മുൻഗണന. ഓരോ പോസും അർത്ഥവും പഠിക്കുക."}
+      </p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {POLICE_SIGNALS.map((s) => (
+          <div key={s.id} className="rounded-xl border border-border bg-card p-3">
+            <div className="flex gap-3">
+              <div
+                className="h-28 w-24 shrink-0"
+                aria-label={s.name.en}
+                dangerouslySetInnerHTML={{ __html: s.svg }}
+              />
+              <div className="min-w-0">
+                <p className={`text-sm font-semibold ${ml}`}>{t(s.name)}</p>
+                <p className={`mt-0.5 text-xs text-muted-foreground ${ml}`}>{t(s.meaning)}</p>
+              </div>
+            </div>
+            <dl className="mt-3 space-y-1.5 text-xs leading-relaxed">
+              <div className={ml}>
+                <dt className="inline font-semibold text-primary">{t({ en: "Used for: ", ml: "ഉപയോഗം: " })}</dt>
+                <dd className="inline">{t(s.usage)}</dd>
+              </div>
+              <div className={ml}>
+                <dt className="inline font-semibold text-primary">{t({ en: "Exam note: ", ml: "പരീക്ഷാ കുറിപ്പ്: " })}</dt>
+                <dd className="inline">{t(s.examNote)}</dd>
+              </div>
+            </dl>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
