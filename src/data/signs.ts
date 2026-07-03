@@ -19,30 +19,31 @@ export type Sign = {
 // Reusable SVG primitives for Kerala RTO-style signs
 const warningTri = (inner: string) =>
   `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="100,15 190,180 10,180" fill="#fff" stroke="#d61f1f" stroke-width="14" stroke-linejoin="round"/>
-    <g transform="translate(0,8)">${inner}</g>
+    <polygon points="100,14 192,182 8,182" fill="#fff" stroke="#e01f1f" stroke-width="16" stroke-linejoin="round"/>
+    <g transform="translate(0,10)">${inner}</g>
   </svg>`;
 
-const mandatoryCircle = (inner: string, color = "#0a47a3") =>
+const mandatoryCircle = (inner: string, color = "#1157c9") =>
   `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="100" r="92" fill="${color}"/>
-    <circle cx="100" cy="100" r="92" fill="none" stroke="#fff" stroke-width="6"/>
+    <circle cx="100" cy="100" r="94" fill="${color}"/>
     ${inner}
   </svg>`;
 
 const prohibitoryCircle = (inner: string) =>
   `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="100" r="92" fill="#fff"/>
-    <circle cx="100" cy="100" r="92" fill="none" stroke="#d61f1f" stroke-width="14"/>
+    <circle cx="100" cy="100" r="94" fill="#fff"/>
+    <circle cx="100" cy="100" r="86" fill="none" stroke="#e01f1f" stroke-width="16"/>
     ${inner}
   </svg>`;
 
-const infoRect = (inner: string, bg = "#0a47a3") =>
+const infoRect = (inner: string, bg = "#1157c9") =>
   `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <rect x="6" y="6" width="188" height="188" rx="10" fill="${bg}"/>
-    <rect x="6" y="6" width="188" height="188" rx="10" fill="none" stroke="#fff" stroke-width="6"/>
+    <rect x="4" y="4" width="192" height="192" rx="8" fill="${bg}"/>
     ${inner}
   </svg>`;
+
+// Red diagonal strike used on prohibitory signs (top-left to bottom-right)
+const prohibitSlash = `<line x1="42" y1="42" x2="158" y2="158" stroke="#e01f1f" stroke-width="16" stroke-linecap="round"/>`;
 
 export const SIGNS: Sign[] = [
   // ---------------- WARNING (triangles) ----------------
