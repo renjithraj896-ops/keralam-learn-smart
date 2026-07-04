@@ -24,6 +24,7 @@ import { ShareDialog } from "@/components/share-dialog";
 import { FollowDialog } from "@/components/follow-dialog";
 import { FeedbackDialog } from "@/components/feedback-dialog";
 import { LanguageMenu } from "@/components/language-menu";
+import { AdUnit } from "@/components/ad-unit";
 
 type NavItem = { to: string; en: string; ml: string };
 type NavGroup = { en: string; ml: string; items: NavItem[] };
@@ -259,6 +260,10 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       </header>
 
       <main className="flex-1">{children}</main>
+
+      <div className="mx-auto w-full max-w-6xl px-4">
+        <AdUnit format="auto" className="mt-8 mb-0" />
+      </div>
 
       <footer className="mt-12 border-t border-border bg-card/50">
         <div className="mx-auto max-w-6xl px-4 py-8">
