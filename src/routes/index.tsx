@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SiteLayout } from "@/components/site-layout";
 import { useSite } from "@/lib/site-context";
+import { AdUnit } from "@/components/ad-unit";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -88,6 +89,8 @@ function Index() {
             ))}
           </div>
         </section>
+
+        <AdUnit format="auto" className="my-4" />
 
         <div className="mb-6 flex items-end justify-between gap-3">
           <div>
