@@ -40,17 +40,23 @@ function ContactPage() {
           <Card className="p-4">
             <Mail className="h-5 w-5 text-primary" />
             <p className="mt-2 text-xs text-muted-foreground">Email</p>
-            <p className="text-sm font-medium">hello@keralaroadmaster.in</p>
+            <a href="mailto:renjithraj154@gmail.com" className="text-sm font-medium hover:text-primary break-all">
+              renjithraj154@gmail.com
+            </a>
           </Card>
           <Card className="p-4">
             <Phone className="h-5 w-5 text-primary" />
             <p className="mt-2 text-xs text-muted-foreground">Support</p>
-            <p className="text-sm font-medium">+91 90000 00000</p>
+            <a href="tel:+919447480651" className="text-sm font-medium hover:text-primary">
+              +91 94474 80651
+            </a>
           </Card>
           <Card className="p-4">
             <MapPin className="h-5 w-5 text-primary" />
             <p className="mt-2 text-xs text-muted-foreground">Location</p>
-            <p className="text-sm font-medium">Thiruvananthapuram, Kerala</p>
+            <p className="text-sm font-medium">
+              Plavarthala Line, Thamalam, Karamana, Thiruvananthapuram – 695012, Kerala, India
+            </p>
           </Card>
         </div>
 
