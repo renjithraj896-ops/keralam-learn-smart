@@ -37,6 +37,7 @@ import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as QuizSetIdRouteImport } from './routes/quiz.$setId'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as ApiPublicInstamojoWebhookRouteImport } from './routes/api/public/instamojo-webhook'
 
 const UserAgreementRoute = UserAgreementRouteImport.update({
   id: '/user-agreement',
@@ -177,6 +178,12 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicInstamojoWebhookRoute =
+  ApiPublicInstamojoWebhookRouteImport.update({
+    id: '/api/public/instamojo-webhook',
+    path: '/api/public/instamojo-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -206,6 +213,7 @@ export interface FileRoutesByFullPath {
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
   '/quiz/': typeof QuizIndexRoute
+  '/api/public/instamojo-webhook': typeof ApiPublicInstamojoWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -235,6 +243,7 @@ export interface FileRoutesByTo {
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
   '/quiz': typeof QuizIndexRoute
+  '/api/public/instamojo-webhook': typeof ApiPublicInstamojoWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -266,6 +275,7 @@ export interface FileRoutesById {
   '/category/$slug': typeof CategorySlugRoute
   '/quiz/$setId': typeof QuizSetIdRoute
   '/quiz/': typeof QuizIndexRoute
+  '/api/public/instamojo-webhook': typeof ApiPublicInstamojoWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -297,6 +307,7 @@ export interface FileRouteTypes {
     | '/category/$slug'
     | '/quiz/$setId'
     | '/quiz/'
+    | '/api/public/instamojo-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -326,6 +337,7 @@ export interface FileRouteTypes {
     | '/category/$slug'
     | '/quiz/$setId'
     | '/quiz'
+    | '/api/public/instamojo-webhook'
   id:
     | '__root__'
     | '/'
@@ -356,6 +368,7 @@ export interface FileRouteTypes {
     | '/category/$slug'
     | '/quiz/$setId'
     | '/quiz/'
+    | '/api/public/instamojo-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -386,6 +399,7 @@ export interface RootRouteChildren {
   CategorySlugRoute: typeof CategorySlugRoute
   QuizSetIdRoute: typeof QuizSetIdRoute
   QuizIndexRoute: typeof QuizIndexRoute
+  ApiPublicInstamojoWebhookRoute: typeof ApiPublicInstamojoWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -586,6 +600,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/instamojo-webhook': {
+      id: '/api/public/instamojo-webhook'
+      path: '/api/public/instamojo-webhook'
+      fullPath: '/api/public/instamojo-webhook'
+      preLoaderRoute: typeof ApiPublicInstamojoWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -628,6 +649,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategorySlugRoute: CategorySlugRoute,
   QuizSetIdRoute: QuizSetIdRoute,
   QuizIndexRoute: QuizIndexRoute,
+  ApiPublicInstamojoWebhookRoute: ApiPublicInstamojoWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
