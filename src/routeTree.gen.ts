@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserAgreementRouteImport } from './routes/user-agreement'
+import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as TrustRouteImport } from './routes/trust'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -42,6 +43,11 @@ import { Route as ApiPublicInstamojoWebhookRouteImport } from './routes/api/publ
 const UserAgreementRoute = UserAgreementRouteImport.update({
   id: '/user-agreement',
   path: '/user-agreement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnlockRoute = UnlockRouteImport.update({
+  id: '/unlock',
+  path: '/unlock',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrustRoute = TrustRouteImport.update({
@@ -208,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
+  '/unlock': typeof UnlockRoute
   '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -238,6 +245,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
+  '/unlock': typeof UnlockRoute
   '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -270,6 +278,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trust': typeof TrustRoute
+  '/unlock': typeof UnlockRoute
   '/user-agreement': typeof UserAgreementRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -302,6 +311,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/trust'
+    | '/unlock'
     | '/user-agreement'
     | '/profile'
     | '/category/$slug'
@@ -332,6 +342,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/trust'
+    | '/unlock'
     | '/user-agreement'
     | '/profile'
     | '/category/$slug'
@@ -363,6 +374,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/trust'
+    | '/unlock'
     | '/user-agreement'
     | '/_authenticated/profile'
     | '/category/$slug'
@@ -395,6 +407,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   TermsRoute: typeof TermsRoute
   TrustRoute: typeof TrustRoute
+  UnlockRoute: typeof UnlockRoute
   UserAgreementRoute: typeof UserAgreementRoute
   CategorySlugRoute: typeof CategorySlugRoute
   QuizSetIdRoute: typeof QuizSetIdRoute
@@ -409,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/user-agreement'
       fullPath: '/user-agreement'
       preLoaderRoute: typeof UserAgreementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unlock': {
+      id: '/unlock'
+      path: '/unlock'
+      fullPath: '/unlock'
+      preLoaderRoute: typeof UnlockRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trust': {
@@ -645,6 +665,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   TermsRoute: TermsRoute,
   TrustRoute: TrustRoute,
+  UnlockRoute: UnlockRoute,
   UserAgreementRoute: UserAgreementRoute,
   CategorySlugRoute: CategorySlugRoute,
   QuizSetIdRoute: QuizSetIdRoute,
