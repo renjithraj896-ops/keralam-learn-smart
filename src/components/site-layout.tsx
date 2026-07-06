@@ -235,7 +235,6 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </Link>
 
           <div className="ml-auto flex items-center gap-1">
-            <LanguageMenu />
             <ShareDialog>
               <Button variant="ghost" size="icon" aria-label="Share">
                 <Share2 className="h-5 w-5" />
@@ -249,6 +248,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             >
               {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
+            <LanguageMenu />
             <UserMenu />
           </div>
         </div>
