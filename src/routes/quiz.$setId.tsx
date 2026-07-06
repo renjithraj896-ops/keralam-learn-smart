@@ -23,7 +23,7 @@ type Lang = "en" | "ml";
 type Answer = number | null; // null = unanswered (timed out / skipped)
 
 export const Route = createFileRoute("/quiz/$setId")({
-  validateSearch: (s: Record<string, unknown>): { lang: Lang } => ({
+  validateSearch: (s: Record<string, unknown>): { lang?: Lang } => ({
     lang: s.lang === "ml" ? "ml" : "en",
   }),
   head: () => ({
