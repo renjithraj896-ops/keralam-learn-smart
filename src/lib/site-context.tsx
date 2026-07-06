@@ -8,15 +8,13 @@ import {
   type ReactNode,
 } from "react";
 
-export type Lang = "en" | "ml" | "hi" | "ta";
+export type Lang = "en" | "ml";
 
-const LANG_VALUES: readonly Lang[] = ["en", "ml", "hi", "ta"] as const;
+const LANG_VALUES: readonly Lang[] = ["en", "ml"] as const;
 
 export const LANGUAGES: { code: Lang; label: string; native: string }[] = [
   { code: "en", label: "English", native: "English" },
   { code: "ml", label: "Malayalam", native: "മലയാളം" },
-  { code: "hi", label: "Hindi", native: "हिन्दी" },
-  { code: "ta", label: "Tamil", native: "தமிழ்" },
 ];
 
 type SiteCtx = {
