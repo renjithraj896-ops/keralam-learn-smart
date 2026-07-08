@@ -13,28 +13,58 @@ function AuthCallbackPage() {
   useEffect(() => {
     let cancelled = false;
 
-    // Wait for Supabase to hydrate the session (set by the Lovable OAuth wrapper
-    // via supabase.auth.setSession, or via the URL hash on full-page redirects).
-    const check = async () => {
+    const goError = (message: string) =>
+      navigate({ to: "/auth/auth-error", search: { message } });
+
+    const finish = async () => {
+      const url = new URL(window.location.href);
+
+      // 1. Provider returned an explicit error (e.g. user denied access).
+      const providerError =
+        url.searchParams.get("error_description") || url.searchParams.get("error");
+      if (providerError) {
+        if (!cancelled) goError(providerError);
+        return;
+      }
+
+      // 2. Authorization-code (PKCE) flow: Supabase redirects with ?code=...
+      const code = url.searchParams.get("code");
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (cancelled) return;
+        if (error) {
+          goError(error.message);
+          return;
+        }
+        navigate({ to: "/" });
+        return;
+      }
+
+      // 3. Token/hash flow (used by the Lovable OAuth wrapper + implicit flow):
+      // the session is set via supabase.auth.setSession or detectSessionInUrl.
+      // Poll briefly for the hydrated session.
       for (let i = 0; i < 20; i++) {
         if (cancelled) return;
         const { data } = await supabase.auth.getSession();
         if (data.session) {
-          navigate({ to: "/profile" });
+          navigate({ to: "/" });
           return;
         }
         await new Promise((r) => setTimeout(r, 150));
       }
-      if (!cancelled) navigate({ to: "/auth" });
+
+      // 4. Nothing resolved a session — surface a friendly error.
+      if (!cancelled) goError("We couldn't complete your sign-in. Please try again.");
     };
 
+    // React immediately if the session arrives via onAuthStateChange.
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
       if (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
-        navigate({ to: "/profile" });
+        if (!cancelled) navigate({ to: "/" });
       }
     });
 
-    check();
+    finish();
 
     return () => {
       cancelled = true;

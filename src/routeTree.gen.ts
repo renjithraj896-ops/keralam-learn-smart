@@ -41,6 +41,7 @@ import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth.reset-password'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as AuthAuthErrorRouteImport } from './routes/auth.auth-error'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as ApiPublicInstamojoWebhookRouteImport } from './routes/api/public/instamojo-webhook'
 
@@ -203,6 +204,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/callback',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthAuthErrorRoute = AuthAuthErrorRouteImport.update({
+  id: '/auth-error',
+  path: '/auth-error',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -241,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/unlock': typeof UnlockRoute
   '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/auth/auth-error': typeof AuthAuthErrorRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
@@ -276,6 +283,7 @@ export interface FileRoutesByTo {
   '/unlock': typeof UnlockRoute
   '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/auth/auth-error': typeof AuthAuthErrorRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
@@ -313,6 +321,7 @@ export interface FileRoutesById {
   '/unlock': typeof UnlockRoute
   '/user-agreement': typeof UserAgreementRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/auth/auth-error': typeof AuthAuthErrorRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
@@ -350,6 +359,7 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/user-agreement'
     | '/profile'
+    | '/auth/auth-error'
     | '/auth/callback'
     | '/auth/forgot-password'
     | '/auth/reset-password'
@@ -385,6 +395,7 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/user-agreement'
     | '/profile'
+    | '/auth/auth-error'
     | '/auth/callback'
     | '/auth/forgot-password'
     | '/auth/reset-password'
@@ -421,6 +432,7 @@ export interface FileRouteTypes {
     | '/unlock'
     | '/user-agreement'
     | '/_authenticated/profile'
+    | '/auth/auth-error'
     | '/auth/callback'
     | '/auth/forgot-password'
     | '/auth/reset-password'
@@ -690,6 +702,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/auth/auth-error': {
+      id: '/auth/auth-error'
+      path: '/auth-error'
+      fullPath: '/auth/auth-error'
+      preLoaderRoute: typeof AuthAuthErrorRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -719,12 +738,14 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface AuthRouteChildren {
+  AuthAuthErrorRoute: typeof AuthAuthErrorRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthAuthErrorRoute: AuthAuthErrorRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
