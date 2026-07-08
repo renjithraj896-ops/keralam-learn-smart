@@ -27,7 +27,6 @@ import { Route as DataProtectionRouteImport } from './routes/data-protection'
 import { Route as CopyrightRouteImport } from './routes/copyright'
 import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApplicationTrackingRouteImport } from './routes/application-tracking'
 import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
 import { Route as AcceptableUseRouteImport } from './routes/acceptable-use'
@@ -35,6 +34,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
+import { Route as AuthIndexRouteImport } from './routes/auth.index'
 import { Route as QuizSetIdRouteImport } from './routes/quiz.$setId'
 import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
@@ -135,11 +135,6 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApplicationTrackingRoute = ApplicationTrackingRouteImport.update({
   id: '/application-tracking',
   path: '/application-tracking',
@@ -172,6 +167,11 @@ const IndexRoute = IndexRouteImport.update({
 const QuizIndexRoute = QuizIndexRouteImport.update({
   id: '/quiz/',
   path: '/quiz/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizSetIdRoute = QuizSetIdRouteImport.update({
@@ -227,7 +227,6 @@ export interface FileRoutesByFullPath {
   '/acceptable-use': typeof AcceptableUseRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
-  '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookie-policy': typeof CookiePolicyRoute
   '/copyright': typeof CopyrightRoute
@@ -254,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/category/$slug': typeof CategorySlugRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/quiz/$setId': typeof QuizSetIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/quiz/': typeof QuizIndexRoute
   '/api/public/instamojo-webhook': typeof ApiPublicInstamojoWebhookRoute
 }
@@ -263,7 +263,6 @@ export interface FileRoutesByTo {
   '/acceptable-use': typeof AcceptableUseRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
-  '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookie-policy': typeof CookiePolicyRoute
   '/copyright': typeof CopyrightRoute
@@ -290,6 +289,7 @@ export interface FileRoutesByTo {
   '/category/$slug': typeof CategorySlugRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/quiz/$setId': typeof QuizSetIdRoute
+  '/auth': typeof AuthIndexRoute
   '/quiz': typeof QuizIndexRoute
   '/api/public/instamojo-webhook': typeof ApiPublicInstamojoWebhookRoute
 }
@@ -301,7 +301,6 @@ export interface FileRoutesById {
   '/acceptable-use': typeof AcceptableUseRoute
   '/ai-assistant': typeof AiAssistantRoute
   '/application-tracking': typeof ApplicationTrackingRoute
-  '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookie-policy': typeof CookiePolicyRoute
   '/copyright': typeof CopyrightRoute
@@ -328,6 +327,7 @@ export interface FileRoutesById {
   '/category/$slug': typeof CategorySlugRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/quiz/$setId': typeof QuizSetIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/quiz/': typeof QuizIndexRoute
   '/api/public/instamojo-webhook': typeof ApiPublicInstamojoWebhookRoute
 }
@@ -339,7 +339,6 @@ export interface FileRouteTypes {
     | '/acceptable-use'
     | '/ai-assistant'
     | '/application-tracking'
-    | '/auth'
     | '/contact'
     | '/cookie-policy'
     | '/copyright'
@@ -366,6 +365,7 @@ export interface FileRouteTypes {
     | '/category/$slug'
     | '/payment/success'
     | '/quiz/$setId'
+    | '/auth/'
     | '/quiz/'
     | '/api/public/instamojo-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -375,7 +375,6 @@ export interface FileRouteTypes {
     | '/acceptable-use'
     | '/ai-assistant'
     | '/application-tracking'
-    | '/auth'
     | '/contact'
     | '/cookie-policy'
     | '/copyright'
@@ -402,6 +401,7 @@ export interface FileRouteTypes {
     | '/category/$slug'
     | '/payment/success'
     | '/quiz/$setId'
+    | '/auth'
     | '/quiz'
     | '/api/public/instamojo-webhook'
   id:
@@ -412,7 +412,6 @@ export interface FileRouteTypes {
     | '/acceptable-use'
     | '/ai-assistant'
     | '/application-tracking'
-    | '/auth'
     | '/contact'
     | '/cookie-policy'
     | '/copyright'
@@ -439,6 +438,7 @@ export interface FileRouteTypes {
     | '/category/$slug'
     | '/payment/success'
     | '/quiz/$setId'
+    | '/auth/'
     | '/quiz/'
     | '/api/public/instamojo-webhook'
   fileRoutesById: FileRoutesById
@@ -450,7 +450,6 @@ export interface RootRouteChildren {
   AcceptableUseRoute: typeof AcceptableUseRoute
   AiAssistantRoute: typeof AiAssistantRoute
   ApplicationTrackingRoute: typeof ApplicationTrackingRoute
-  AuthRoute: typeof AuthRouteWithChildren
   ContactRoute: typeof ContactRoute
   CookiePolicyRoute: typeof CookiePolicyRoute
   CopyrightRoute: typeof CopyrightRoute
@@ -472,6 +471,7 @@ export interface RootRouteChildren {
   CategorySlugRoute: typeof CategorySlugRoute
   PaymentSuccessRoute: typeof PaymentSuccessRoute
   QuizSetIdRoute: typeof QuizSetIdRoute
+  AuthIndexRoute: typeof AuthIndexRoute
   QuizIndexRoute: typeof QuizIndexRoute
   ApiPublicInstamojoWebhookRoute: typeof ApiPublicInstamojoWebhookRoute
 }
@@ -604,13 +604,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/application-tracking': {
       id: '/application-tracking'
       path: '/application-tracking'
@@ -658,6 +651,13 @@ declare module '@tanstack/react-router' {
       path: '/quiz'
       fullPath: '/quiz/'
       preLoaderRoute: typeof QuizIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiz/$setId': {
@@ -737,22 +737,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface AuthRouteChildren {
-  AuthAuthErrorRoute: typeof AuthAuthErrorRoute
-  AuthCallbackRoute: typeof AuthCallbackRoute
-  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
-  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthAuthErrorRoute: AuthAuthErrorRoute,
-  AuthCallbackRoute: AuthCallbackRoute,
-  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
-  AuthResetPasswordRoute: AuthResetPasswordRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -760,7 +744,6 @@ const rootRouteChildren: RootRouteChildren = {
   AcceptableUseRoute: AcceptableUseRoute,
   AiAssistantRoute: AiAssistantRoute,
   ApplicationTrackingRoute: ApplicationTrackingRoute,
-  AuthRoute: AuthRouteWithChildren,
   ContactRoute: ContactRoute,
   CookiePolicyRoute: CookiePolicyRoute,
   CopyrightRoute: CopyrightRoute,
@@ -782,6 +765,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategorySlugRoute: CategorySlugRoute,
   PaymentSuccessRoute: PaymentSuccessRoute,
   QuizSetIdRoute: QuizSetIdRoute,
+  AuthIndexRoute: AuthIndexRoute,
   QuizIndexRoute: QuizIndexRoute,
   ApiPublicInstamojoWebhookRoute: ApiPublicInstamojoWebhookRoute,
 }
