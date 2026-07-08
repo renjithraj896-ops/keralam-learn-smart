@@ -38,6 +38,8 @@ import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as QuizSetIdRouteImport } from './routes/quiz.$setId'
 import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as AuthResetPasswordRouteImport } from './routes/auth.reset-password'
+import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as ApiPublicInstamojoWebhookRouteImport } from './routes/api/public/instamojo-webhook'
@@ -186,6 +188,16 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/callback',
   path: '/callback',
@@ -230,6 +242,8 @@ export interface FileRoutesByFullPath {
   '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/reset-password': typeof AuthResetPasswordRoute
   '/category/$slug': typeof CategorySlugRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/quiz/$setId': typeof QuizSetIdRoute
@@ -263,6 +277,8 @@ export interface FileRoutesByTo {
   '/user-agreement': typeof UserAgreementRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/reset-password': typeof AuthResetPasswordRoute
   '/category/$slug': typeof CategorySlugRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/quiz/$setId': typeof QuizSetIdRoute
@@ -298,6 +314,8 @@ export interface FileRoutesById {
   '/user-agreement': typeof UserAgreementRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/reset-password': typeof AuthResetPasswordRoute
   '/category/$slug': typeof CategorySlugRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/quiz/$setId': typeof QuizSetIdRoute
@@ -333,6 +351,8 @@ export interface FileRouteTypes {
     | '/user-agreement'
     | '/profile'
     | '/auth/callback'
+    | '/auth/forgot-password'
+    | '/auth/reset-password'
     | '/category/$slug'
     | '/payment/success'
     | '/quiz/$setId'
@@ -366,6 +386,8 @@ export interface FileRouteTypes {
     | '/user-agreement'
     | '/profile'
     | '/auth/callback'
+    | '/auth/forgot-password'
+    | '/auth/reset-password'
     | '/category/$slug'
     | '/payment/success'
     | '/quiz/$setId'
@@ -400,6 +422,8 @@ export interface FileRouteTypes {
     | '/user-agreement'
     | '/_authenticated/profile'
     | '/auth/callback'
+    | '/auth/forgot-password'
+    | '/auth/reset-password'
     | '/category/$slug'
     | '/payment/success'
     | '/quiz/$setId'
@@ -645,6 +669,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/reset-password': {
+      id: '/auth/reset-password'
+      path: '/reset-password'
+      fullPath: '/auth/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/auth/forgot-password': {
+      id: '/auth/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/auth/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/auth/callback': {
       id: '/auth/callback'
       path: '/callback'
@@ -682,10 +720,14 @@ const AuthenticatedRouteRouteWithChildren =
 
 interface AuthRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthCallbackRoute: AuthCallbackRoute,
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthResetPasswordRoute: AuthResetPasswordRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)

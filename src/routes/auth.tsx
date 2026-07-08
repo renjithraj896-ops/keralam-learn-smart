@@ -155,6 +155,13 @@ function AuthPage() {
             <div>
               <Label htmlFor="password" className={ml}>{t("Password", "പാസ്‌വേഡ്")}</Label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" autoComplete={mode === "signup" ? "new-password" : "current-password"} required />
+              {mode === "signin" && (
+                <div className="mt-1.5 text-right">
+                  <Link to="/auth/forgot-password" className={`text-xs text-muted-foreground underline hover:text-primary ${ml}`}>
+                    {t("Forgot password?", "പാസ്‌വേഡ് മറന്നോ?")}
+                  </Link>
+                </div>
+              )}
             </div>
 
             <Button type="submit" className="w-full" disabled={busy}>

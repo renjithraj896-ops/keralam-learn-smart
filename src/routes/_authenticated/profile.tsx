@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { LogOut, User, Mail, Phone, Globe } from "lucide-react";
+import { LogOut, User, Mail, Phone, Globe, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,6 +26,8 @@ const schema = z.object({
   phone: z.string().trim().max(20).optional().or(z.literal("")),
 });
 
+const passwordSchema = z.string().min(6, "Min 6 characters").max(72);
+
 function ProfilePage() {
   const { user, profile, refreshProfile, signOut } = useAuth();
   const { lang } = useSite();
@@ -36,6 +38,10 @@ function ProfilePage() {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [saving, setSaving] = useState(false);
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [changingPwd, setChangingPwd] = useState(false);
 
   useEffect(() => {
     setFullName(profile?.full_name ?? "");
@@ -63,6 +69,22 @@ function ProfilePage() {
     if (error) return toast.error(error.message);
     toast.success(t("Profile saved", "പ്രൊഫൈൽ സംരക്ഷിച്ചു"));
     refreshProfile();
+  };
+
+  const onChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsed = passwordSchema.safeParse(newPassword);
+    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (newPassword !== confirmPassword) {
+      return toast.error(t("Passwords do not match", "പാസ്‌വേഡുകൾ പൊരുത്തപ്പെടുന്നില്ല"));
+    }
+    setChangingPwd(true);
+    const { error } = await supabase.auth.updateUser({ password: parsed.data });
+    setChangingPwd(false);
+    if (error) return toast.error(error.message);
+    setNewPassword("");
+    setConfirmPassword("");
+    toast.success(t("Password updated", "പാസ്‌വേഡ് അപ്ഡേറ്റ് ചെയ്തു"));
   };
 
   const onSignOut = async () => {
@@ -130,6 +152,42 @@ function ProfilePage() {
             <Link to="/quiz">{t("Continue learning", "പഠനം തുടരുക")}</Link>
           </Button>
         </div>
+      </form>
+
+      <form onSubmit={onChangePassword} className="mt-6 space-y-4 rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <h2 className={`flex items-center gap-2 text-lg font-semibold ${ml}`}>
+          <Lock className="h-4 w-4" /> {t("Change Password", "പാസ്‌വേഡ് മാറ്റുക")}
+        </h2>
+
+        <div>
+          <Label htmlFor="new_password" className={ml}>{t("New password", "പുതിയ പാസ്‌വേഡ്")}</Label>
+          <Input
+            id="new_password"
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="••••••••"
+            autoComplete="new-password"
+            maxLength={72}
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="confirm_password" className={ml}>{t("Confirm new password", "പാസ്‌വേഡ് ഉറപ്പിക്കുക")}</Label>
+          <Input
+            id="confirm_password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="••••••••"
+            autoComplete="new-password"
+            maxLength={72}
+          />
+        </div>
+
+        <Button type="submit" disabled={changingPwd}>
+          {changingPwd ? t("Updating…", "അപ്ഡേറ്റ് ചെയ്യുന്നു…") : t("Update password", "പാസ്‌വേഡ് അപ്ഡേറ്റ് ചെയ്യുക")}
+        </Button>
       </form>
     </div>
   );
