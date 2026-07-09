@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/lib/auth-context";
 import { useSite } from "@/lib/site-context";
 
@@ -29,7 +28,6 @@ const nameSchema = z.string().trim().min(1, "Name is required").max(80);
 
 function AuthPage() {
   const navigate = useNavigate();
-  const router = useRouter();
   const { user, loading } = useAuth();
   const { lang } = useSite();
   const ml = lang === "ml" ? "lang-ml" : "";
@@ -48,19 +46,21 @@ function AuthPage() {
   const onGoogle = async () => {
     setBusy(true);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + "/auth/callback",
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/auth/callback",
+        },
       });
-      if ("error" in result && result.error) {
-        toast.error(result.error.message ?? "Google sign-in failed");
+      if (error) {
+        toast.error(error.message ?? "Google sign-in failed");
+        setBusy(false);
         return;
       }
-      if ("redirected" in result && result.redirected) return;
-      router.invalidate();
-      navigate({ to: "/profile" });
+      // Supabase performs a full-page redirect to Google, so execution
+      // stops here — no further navigation needed on this page.
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Sign-in failed");
-    } finally {
       setBusy(false);
     }
   };
