@@ -12,6 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Use Vercel preset so `npm run build` outputs to .vercel/output (Vercel's expected structure).
+  // This only applies during `vite build` — dev server is unaffected.
+  nitro: {
+    preset: "vercel",
+  },
   vite: {
     server: {
       host: "0.0.0.0",
